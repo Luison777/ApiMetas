@@ -22,7 +22,6 @@ function crear(tabla,item,callback){
     const keys=Object.keys(item);
     const columnas=keys.join(', ');
     const valores= keys.map(key=> `'${item[key]}'`).join(', ');
-
     db.any(`INSERT INTO ${tabla} (${columnas}) VALUES(${valores}) returning *`)
     .then(([resultado])=>{
         callback(null,resultado);
@@ -31,6 +30,7 @@ function crear(tabla,item,callback){
         callback(error);
     });
 }
+
 function actualizar(tabla,id,item,callback){
     const keys=Object.keys(item);
     const actualizaciones= keys.map(key=> `${key}='${item[key]}'`).join(', ');
