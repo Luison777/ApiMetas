@@ -30,7 +30,6 @@ function crear(tabla,item,callback){
         callback(error);
     });
 }
-
 function actualizar(tabla,id,item,callback){
     const keys=Object.keys(item);
     const actualizaciones= keys.map(key=> `${key}='${item[key]}'`).join(', ');
@@ -53,12 +52,21 @@ function borrar(tabla,id,callback){
         callback(error);
     });
 }
-
+function pedirCuenta(usuario,callback){
+    db.any(`SELECT * FROM cuentas WHERE usuario = '${usuario}'`)
+        .then(resultado=>{
+            callback(null,resultado);
+        })
+        .catch(error=>{
+            callback(error);
+        });
+}
 
 module.exports={
     pedirTodas,
     pedirMeta, 
     crear,
     actualizar,
-    borrar
+    borrar,
+    pedirCuenta
 };
